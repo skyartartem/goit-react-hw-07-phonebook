@@ -17,7 +17,7 @@ export const ContactForm = () => {
   const onSubmit = evt => {
     evt.preventDefault();
     if (
-      contacts.some(
+      contacts.items.some(
         value => value.name.toLocaleLowerCase() === name.toLocaleLowerCase()
       )
     ) {

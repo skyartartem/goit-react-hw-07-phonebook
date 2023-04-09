@@ -25,11 +25,13 @@ const contactsSlice = createSlice({
       .addCase(addContactThunk.rejected, handleReject)
       .addCase(addContactThunk.fulfilled, (state, { payload }) => {
         state.items.push(payload);
+        state.isLoading = false;
       })
       .addCase(deleteContactThunk.pending, handlePending)
       .addCase(deleteContactThunk.rejected, handleReject)
       .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
         state.items = state.items.filter(item => item.id !== payload.id);
+        state.isLoading = false;
       });
   },
 });

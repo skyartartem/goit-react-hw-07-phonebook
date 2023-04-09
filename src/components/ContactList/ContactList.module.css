@@ -6,13 +6,14 @@
 .item {
     display: flex;
     gap: 20px;
-    width: 300px;
+    width: 400px;
     justify-content: space-between;
     margin-bottom: 8px;
 }
 
 .number {
     font-weight: 600;
+    margin-left: auto;
 }
 .button {
     justify-content: flex-end;

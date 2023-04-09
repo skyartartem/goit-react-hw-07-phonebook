@@ -5,11 +5,11 @@ export const fetchAllThunk = createAsyncThunk(
   'contacts/fetchAll',
   async (_, { reject }) => {
     try {
-      const { data } = fetchContacts();
+      const  data = fetchContacts();
       return data;
     } catch (e) {
       return reject(e.message);
-    }
+    } 
   }
 );
 
@@ -17,7 +17,7 @@ export const addContactThunk = createAsyncThunk(
   'contacts/addContact',
   async (contact, { reject }) => {
     try {
-      const { data } = addContact(contact);
+      const  data  = addContact(contact);
       return data;
     } catch (e) {
       return reject(e.message);
@@ -29,7 +29,7 @@ export const deleteContactThunk = createAsyncThunk(
   'contacts/deleteContact',
   async (id, { reject }) => {
     try {
-      const { data } = deleteContact(id);
+      const data = deleteContact(id);
       return data;
     } catch (e) {
       return reject(e.message);

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add } from 'redux/contactsSlice';
 import css from './ContactForm.module.css';
+import { addContactThunk } from 'redux/contactsThunk';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
-
+  
   const onChangeInput = evt => {
     const { name, value } = evt.currentTarget;
     name === 'name' ? setName(value) : setNumber(value);
@@ -17,13 +17,13 @@ export const ContactForm = () => {
   const onSubmit = evt => {
     evt.preventDefault();
     if (
-      contacts.items.some(
+      contacts.some(
         value => value.name.toLocaleLowerCase() === name.toLocaleLowerCase()
       )
     ) {
       alert(`${name} is alredy in contacts`);
     } else {
-      dispatch(add({ name, number }));
+      dispatch(addContactThunk({ "name":name, "phone":number }));
     }
     setName('');
     setNumber('');

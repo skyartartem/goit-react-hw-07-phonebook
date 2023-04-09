@@ -1,20 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { remove } from 'redux/contactsSlice';
 import css from './ContactList.module.css';
+import { deleteContactThunk, fetchAllThunk } from 'redux/contactsThunk';
+import { useEffect } from 'react';
 
 export const ContactList = () => {
   const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state=>state.filter)
+  const loading = useSelector(state => state.contacts.isLoading);
+  console.log(loading);
+  const query = useSelector(state => state.filter)
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(fetchAllThunk());
+  }, [dispatch]);
   const filteredContacts = () => {
     const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact.name.toLowerCase().includes(query.toLowerCase())
     );
     return filteredContacts;
   };
 
-  return (
+  return (<>
+    { loading && <div>loading...</div>}
     <ul className={css.list}>
       {filteredContacts().map(contact => {
         return (
@@ -25,7 +31,7 @@ export const ContactList = () => {
               className={css.button}
               type="button"
               onClick={() => {
-                dispatch(remove(contact.id));
+                dispatch(deleteContactThunk(contact.id));
               }}
             >
               Delete
@@ -34,5 +40,6 @@ export const ContactList = () => {
         );
       })}
     </ul>
+  </>
   );
 };

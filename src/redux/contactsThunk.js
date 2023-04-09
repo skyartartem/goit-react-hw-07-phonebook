@@ -3,36 +3,37 @@ import { addContact, fetchContacts, deleteContact } from 'service/contactsApi';
 
 export const fetchAllThunk = createAsyncThunk(
   'contacts/fetchAll',
-  async (_, { reject }) => {
+  async (_, err) => {
     try {
-      const  data = fetchContacts();
-      return data;
+      const response = await fetchContacts();
+      // data.then(console.log);
+      return response.data;
     } catch (e) {
-      return reject(e.message);
+      return err.rejectWithValue(e.message);
     } 
   }
 );
 
 export const addContactThunk = createAsyncThunk(
   'contacts/addContact',
-  async (contact, { reject }) => {
+  async (contact, err) => {
     try {
-      const  data  = addContact(contact);
-      return data;
+      const response = await addContact(contact);
+      return response.data;
     } catch (e) {
-      return reject(e.message);
+      return err.rejectWithValue(e.message);
     }
   }
 );
 
 export const deleteContactThunk = createAsyncThunk(
   'contacts/deleteContact',
-  async (id, { reject }) => {
+  async (id, err) => {
     try {
-      const data = deleteContact(id);
-      return data;
+      const response = await deleteContact(id);
+      return response.data;
     } catch (e) {
-      return reject(e.message);
+      return err.rejectWithValue(e.message);
     }
   }
 );

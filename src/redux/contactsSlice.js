@@ -4,7 +4,7 @@ import { addContactThunk, deleteContactThunk, fetchAllThunk } from './contactsTh
 // import { fetchTasks, addTask } from './operations';
 
 const handlePending = (state) => { state.isLoading = true }
-const handleReject = (state, action) => { state.error = action.payload }
+const handleReject = (state, action) => { state.isLoading = false; state.error = action.payload }
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -18,13 +18,15 @@ const contactsSlice = createSlice({
       .addCase(fetchAllThunk.pending, handlePending)
       .addCase(fetchAllThunk.rejected, handleReject)
       .addCase(fetchAllThunk.fulfilled, (state, { payload }) => {
-        state.items = payload;
+        state.error = null;
         state.isLoading = false;
+        state.items = payload;
       })
       .addCase(addContactThunk.pending, handlePending)
       .addCase(addContactThunk.rejected, handleReject)
       .addCase(addContactThunk.fulfilled, (state, { payload }) => {
         state.items.push(payload);
+        state.error = null;
         state.isLoading = false;
       })
       .addCase(deleteContactThunk.pending, handlePending)
@@ -32,6 +34,7 @@ const contactsSlice = createSlice({
       .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
         state.items = state.items.filter(item => item.id !== payload.id);
         state.isLoading = false;
+        state.error = null;
       });
   },
 });
